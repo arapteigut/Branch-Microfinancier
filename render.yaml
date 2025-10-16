@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: branch-backend
+    env: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MONGODB_URI
+        sync: false
+      - key: PORT
+        value: 5000
+    disk:
+      name: uploads
+      mountPath: /backend/uploads
+      sizeGB: 1
+
+  - type: static
+    name: branch-frontend
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: build
+    envVars:
+      - key: REACT_APP_API_URL
+        sync: false
